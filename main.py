@@ -1,5 +1,6 @@
 from flask import Flask, render_template, flash, request
 import datetime
+import os
 import webscr
 
 app = Flask(__name__)
@@ -37,7 +38,9 @@ def result():
 
 @app.route("/scrapper")
 def scrapp():
+    # os.system("python3 webscr.py")
     webscr.scrapmain()
+    return "Scrapper Running"
 
 
 @app.route('/variable/<int:postID>')
