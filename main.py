@@ -1,8 +1,8 @@
 from flask import Flask, render_template, flash, request
 import datetime
-import os
+# import os
 import webscr
-
+item = "watch"
 app = Flask(__name__)
 
 # Third Commit
@@ -36,11 +36,16 @@ def result():
         return render_template("result.html", result=result)
 
 
-@app.route("/scrapper")
+@app.route("/scrapper", methods=['GET', 'POST'])
 def scrapp():
+    text = ""
+    if request.method == 'POST':
+        if request.form['submit_button'] == 'Scrap':
+            name = request.form['URL']
+            webscr.scrapmain(name)
+            text = "Scrapper for "+name+" running"
     # os.system("python3 webscr.py")
-    webscr.scrapmain()
-    return "Scrapper Running"
+    return render_template("scrap.html", content=text)
 
 
 @app.route('/variable/<int:postID>')
